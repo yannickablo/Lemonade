@@ -50,10 +50,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LemonadeApp(modifier: Modifier = Modifier) {
     // État pour suivre l'étape actuelle (1 à 4)
+
     var currentStep by remember { mutableIntStateOf(1) }
     var squeezeCount by remember { mutableIntStateOf(0) }
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -61,9 +62,9 @@ fun LemonadeApp(modifier: Modifier = Modifier) {
         // Appelle la fonction qui gère l'affichage pour l'étape actuelle
         when (currentStep) {
             1 -> LemonadeImageAndText(
-                textLabelResourceId = R.string.lemon_select,
-                drawableResourceId = R.drawable.lemon_tree,
-                contentDescriptionResourceId = R.string.lemon_tree,
+                titreimage = R.string.lemon_select,
+                numbImage = R.drawable.lemon_tree,
+                inforimagId = R.string.lemon_tree,
                 onImageClick = {
                     currentStep = 2
                     // Nombre aléatoire de pressions entre 2 et 4 (inclus)
@@ -71,9 +72,9 @@ fun LemonadeApp(modifier: Modifier = Modifier) {
                 }
             )
             2 -> LemonadeImageAndText(
-                textLabelResourceId = R.string.lemon_squeeze,
-                drawableResourceId = R.drawable.lemon_squeeze,
-                contentDescriptionResourceId = R.string.lemon,
+                titreimage = R.string.lemon_squeeze,
+                numbImage = R.drawable.lemon_squeeze,
+                inforimagId = R.string.lemon,
                 onImageClick = {
                     // Diminuer le compteur de pressions
                     squeezeCount--
@@ -84,18 +85,18 @@ fun LemonadeApp(modifier: Modifier = Modifier) {
                 }
             )
             3 -> LemonadeImageAndText(
-                textLabelResourceId = R.string.lemon_drink,
-                drawableResourceId = R.drawable.lemon_drink,
-                contentDescriptionResourceId = R.string.glass_of_lemonade,
+                titreimage = R.string.lemon_drink,
+                numbImage = R.drawable.lemon_drink,
+                inforimagId = R.string.glass_of_lemonade,
                 onImageClick = {
                     // Passer à l'étape 4
                     currentStep = 4
                 }
             )
             4 -> LemonadeImageAndText(
-                textLabelResourceId = R.string.lemon_restart,
-                drawableResourceId = R.drawable.lemon_restart,
-                contentDescriptionResourceId = R.string.empty_glass,
+                titreimage = R.string.lemon_restart,
+                numbImage = R.drawable.lemon_restart,
+                inforimagId = R.string.empty_glass,
                 onImageClick = {
                     // Revenir à l'étape 1 pour recommencer
                     currentStep = 1
@@ -107,26 +108,30 @@ fun LemonadeApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun LemonadeImageAndText(
-    textLabelResourceId: Int,
-    drawableResourceId: Int,
-    contentDescriptionResourceId: Int,
+    titreimage: Int,
+    numbImage: Int,
+    inforimagId: Int,
     onImageClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-    ) {
+    )
+    {
+
         // Le texte (libellé)
         Text(
-            text = stringResource(textLabelResourceId),
+            text = stringResource(titreimage),
             fontSize = 18.sp
         )
+
+
         // Espace entre le libellé et l'image
         Spacer(modifier = Modifier.height(24.dp))
         Image(
-            painter = painterResource(drawableResourceId),
-            contentDescription = stringResource(contentDescriptionResourceId),
+            painter = painterResource(numbImage),
+            contentDescription = stringResource(inforimagId),
             modifier = Modifier
                 .clip(RoundedCornerShape(40.dp))
                 .background(Color(0xFFC3ECC4))
@@ -138,6 +143,7 @@ fun LemonadeImageAndText(
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
